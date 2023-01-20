@@ -17,9 +17,39 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        public void Add(Car entity)
+        {
+            if(entity.CarName.Length>2 && entity.DailyPrice > 0)
+            {
+                _carDal.Add(entity);
+                Console.WriteLine("Araba Eklendi...");
+            }
+            else
+            {
+                throw new Exception();
+            }
+              
+        }
+
+        public void Delete(Car entity)
+        {
+            _carDal.Delete(entity);
+            Console.WriteLine("Araba Silindi...");
+        }
+
         public List<Car> GetAll()
         {
             return _carDal.GetAll();
+        }
+
+        public List<Car> GetCarsByBrandId(int brandId)
+        {
+            return _carDal.GetAll(c => c.BrandId == brandId);
+        }
+
+        public List<Car> GetCarsByColorId(int colorId)
+        {
+            return _carDal.GetAll(c => c.ColorId == colorId);
         }
     }
 }
