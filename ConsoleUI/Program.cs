@@ -31,8 +31,8 @@ var car1 = new List<Car>() {
     new Car { CarId = 5, BrandId = 1, ColorId = 2, DailyPrice = 174000, ModelYear = 2003, Description = "iyi", CarName = "BMW M8" }
 };
 
-
-foreach (var car in carManager.GetCarDetails())
+var result = carManager.GetCarDetails();
+foreach (var car in result.Data)
 {
     Console.WriteLine("{0} / {1} / {2}", car.CarName, car.BrandName, car.ColorName);
 }
