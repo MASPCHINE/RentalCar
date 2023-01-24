@@ -18,6 +18,10 @@ namespace Business.Constants
         public static string GetBrand = "Renk gösterildi";
         public static string GetCarByBrand = "Markalarına göre araba listelendi";
         public static string GetCarByColor = "Renklerine göre araba listelendi";
+        public static string GetRentalDetail = "Kiralama detayları gösterildi";
+        public static string RentalInvalid = "Araba kiralamaya uygun değildir";
+
+
 
 
 

@@ -3,11 +3,13 @@ using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 using System;
+using System.Runtime.ConstrainedExecution;
 
 CarManager carManager = new CarManager(new EfCarDal());
 BrandManager brandManager = new BrandManager(new EfBrandDal());
 ColorManager colorManager = new ColorManager(new EfColorDal());
-
+UserManager userManager = new UserManager(new EfUserDal());
+RentalManager rentalManager = new RentalManager(new EfRentalDal());
 var brand1 = new List<Brand>()
 {
     new Brand {BrandId=1,Name="BMW"},
@@ -30,9 +32,19 @@ var car1 = new List<Car>() {
     new Car { CarId = 4, BrandId = 2, ColorId = 3, DailyPrice = 146000, ModelYear = 2002, Description = "kötü", CarName = "RENAULT Clio" },
     new Car { CarId = 5, BrandId = 1, ColorId = 2, DailyPrice = 174000, ModelYear = 2003, Description = "iyi", CarName = "BMW M8" }
 };
-
-var result = carManager.GetCarDetails();
-foreach (var car in result.Data)
+var user1 = new List<User>()
 {
-    Console.WriteLine("{0} / {1} / {2}", car.CarName, car.BrandName, car.ColorName);
-}
+    new User{UserId=1,FirstName="Tarık",LastName="Bayram",Email="abc@gmail.com",Password="123"},
+    new User{UserId=2,FirstName="Meryem",LastName="Bayram",Email="abc@gmail.com",Password="123"},
+    new User{UserId=3,FirstName="İbrahim",LastName="Bayram",Email="abc@gmail.com",Password="123"},
+    new User{UserId=4,FirstName="Rümeysa",LastName="Bayram",Email="abc@gmail.com",Password="123"},
+    new User{UserId=5,FirstName="İsmail",LastName="Bayram",Email="abc@gmail.com",Password="123"},
+
+};
+
+var rental2 = new Rental()
+{
+    RentalId = 1,CarId =1, CustomerId=1, RentDate=DateTime.Now,ReturnDate=null
+};
+
+rentalManager.Add(rental2);
