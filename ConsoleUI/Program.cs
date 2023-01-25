@@ -44,7 +44,6 @@ var user1 = new List<User>()
 
 var rental2 = new Rental()
 {
-    RentalId = 1,CarId =1, CustomerId=1, RentDate=DateTime.Now,ReturnDate=null
+    RentalId = 4,CarId =1, CustomerId=1, RentDate=DateTime.Now,ReturnDate=null
 };
-
-rentalManager.Add(rental2);
+var rental = rentalManager.Add(rental2);

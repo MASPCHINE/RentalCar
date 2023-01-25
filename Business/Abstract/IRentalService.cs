@@ -3,6 +3,7 @@ using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +15,7 @@ namespace Business.Abstract
         IResult Delete(Rental entity);
         IResult Update(Rental entity);
         IDataResult<List<Rental>> GetAll();
-        IDataResult<Rental> GetRentalDetail(int carId);
+        IDataResult<Rental> GetCarAvailable(int carId);
+
     }
 }

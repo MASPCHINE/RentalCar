@@ -20,8 +20,13 @@ namespace Business.Concrete
         }
         public IResult Add(Rental entity)
         {
+            var result = GetCarAvailable(entity.CarId).Data.ReturnDate;
+            if (result == null)
+            {
+                return new ErrorResult(Messages.RentalInvalid);
+            }
             _rentalDal.Add(entity);
-            return new SuccessResult();
+            return new SuccessResult(Messages.RentalValid);
         }
 
         public IResult Delete(Rental entity)
@@ -35,9 +40,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.Listed);
         }
 
-        public IDataResult<Rental> GetRentalDetail(int carId)
+        public IDataResult<Rental> GetCarAvailable(int carId)
         {
-            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.CarId == carId), Messages.GetRentalDetail);
+            return new SuccessDataResult<Rental>(_rentalDal.GetCarAvailable(r => r.CarId == carId), Messages.Added);
         }
 
         public IResult Update(Rental entity)
