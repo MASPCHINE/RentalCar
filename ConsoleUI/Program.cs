@@ -46,4 +46,4 @@ var rental2 = new Rental()
 {
     RentalId = 4,CarId =1, CustomerId=1, RentDate=DateTime.Now,ReturnDate=null
 };
-var rental = rentalManager.Add(rental2);
+
