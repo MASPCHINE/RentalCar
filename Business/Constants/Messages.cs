@@ -23,18 +23,6 @@ namespace Business.Constants
         public static string GetRentalDetail = "Kiralama detayları gösterildi";
         public static string RentalInvalid = "Araba kiralamaya uygun değildir";
         public static string RentalValid = "Araba kiralama başarılı";
-
-
-
-
-
-
-
-
-
-
-
-
-
+        public static string GetCarImage = "Araba görseli getirildi";
     }
 }
