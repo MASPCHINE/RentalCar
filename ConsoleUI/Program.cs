@@ -1,15 +1,21 @@
 ﻿using Business.Concrete;
+using Business.Constants;
+using Core.Utilities.Helpers.FileHelper;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 using System;
+using System.IO;
 using System.Runtime.ConstrainedExecution;
+using static System.Net.Mime.MediaTypeNames;
+
 
 CarManager carManager = new CarManager(new EfCarDal());
 BrandManager brandManager = new BrandManager(new EfBrandDal());
 ColorManager colorManager = new ColorManager(new EfColorDal());
 UserManager userManager = new UserManager(new EfUserDal());
 RentalManager rentalManager = new RentalManager(new EfRentalDal());
+CarImageManager carImageManager = new CarImageManager(new EfCarImageDal(),new FileHelper());
 var brand1 = new List<Brand>()
 {
     new Brand {BrandId=1,Name="BMW"},
@@ -21,7 +27,7 @@ var brand1 = new List<Brand>()
 //    brandManager.Add(brand);
 //}
 
-var color1 = new List<Color>()
+var color1 = new List<Entities.Concrete.Color>()
 {
     new Color {ColorId=1,Name="Siyah"},
     new Color {ColorId=2,Name="Kırmızı"},
@@ -42,10 +48,10 @@ var car1 = new List<Car>() {
     new Car { CarId = 5, BrandId = 1, ColorId = 2, DailyPrice = 174000, ModelYear = 2003, Description = "iyi", CarName = "BMW M8" }
 };
 
-foreach (var brand in car1)
-{
-    carManager.Add(brand);
-}
+//foreach (var brand in car1)
+//{
+//    carManager.Add(brand);
+//}
 
 var user1 = new List<User>()
 {
@@ -68,5 +74,49 @@ var rental2 = new Rental()
 
 //rentalManager.Add(rental2);
 
+var carImage = new CarImage()
+{
+    CarId = 2,
+    CarImageId = 2,
+    Date = DateTime.Now,
+    ImagePath = "12.jpg"
+};
 
+//carImageManager.Delete(carImage);
+
+
+string Upload()
+{
+    string filePath = "";
+    FileStream source = File.Open(@"C:\Users\tkbay\OneDrive\Masaüstü\Projeler\.netCore_Calısmaları\ReCapProject\ReCapProject\DataAccess\Assets\img\1.png", FileMode.Open);
+    var root = "wwwroot\\Uploads\\Images\\";
+    if (source.Length > 0)
+    {
+        if (!Directory.Exists(root))
+        {
+            Directory.CreateDirectory(root);
+        }
+        var extension = Path.GetExtension(source.Name);
+        var guid = Guid.NewGuid().ToString();
+        filePath = guid + extension;
+        using (FileStream fs = File.Create(root + filePath))
+        {
+            source.CopyTo(fs);
+            Console.WriteLine(fs.Name);
+            fs.Flush();
+            return filePath;
+        }
+    }
+    return filePath;
+}
+var result = Upload();
+Console.WriteLine(result);
+
+//FileStream fs = new FileStream(path+@"",FileMode.Open);
+//Console.WriteLine(Path.GetExtension(fs.Name));
+//Console.WriteLine(Guid.NewGuid().ToString());
+//Console.WriteLine(Guid.NewGuid());
+
+//byte[] img = new byte[fs.Length];
+//fs.Read(img, 0, Convert.ToInt32(fs.Length));
 
