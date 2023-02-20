@@ -24,5 +24,6 @@ namespace Business.Constants
         public static string RentalInvalid = "Araba kiralamaya uygun değildir";
         public static string RentalValid = "Araba kiralama başarılı";
         public static string GetCarImage = "Araba görseli getirildi";
+        public static string CarImageCountOfImagesLimit="Arabanın maksimum 5 görseli olabilir";
     }
 }

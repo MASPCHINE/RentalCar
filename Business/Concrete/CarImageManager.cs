@@ -1,10 +1,12 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Utilities.Business;
 using Core.Utilities.Helpers.FileHelper;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -27,6 +29,11 @@ namespace Business.Concrete
 
         public IResult Add(IFormFile file , CarImage entity)
         {
+            IResult result = BusinessRules.Run(CheckCarImagesCount(entity.CarId));
+            if(result !=null)
+            {
+                return result;
+            }
             entity.ImagePath = _fileHelper.Upload(file,ImagePath.Root);
             entity.Date = DateTime.Now;
             _carImage.Add(entity);
@@ -40,6 +47,16 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Deleted);
         }
 
+        public IDataResult<List<CarImage>> GetByCarId(int carId)
+        {
+            return new SuccessDataResult<List<CarImage>>(_carImage.GetAll(c=>c.CarId==carId),Messages.GetCarImage);
+        }
+
+        public IDataResult<List<CarImagesDto>> GetImagesByCarId(int carId)
+        {
+            return new SuccessDataResult<List<CarImagesDto>>(_carImage.GetImagesByCarId(carId));
+        }
+      
         public IDataResult<CarImage> GetById(int id)
         {
             return new SuccessDataResult<CarImage>(_carImage.Get(c => c.CarImageId == id), Messages.GetCarImage);
@@ -52,5 +69,16 @@ namespace Business.Concrete
             _carImage.Update(entity);
             return new SuccessResult(Messages.Updated);
         }
+        private IResult CheckCarImagesCount(int carId)
+        {
+            var result = _carImage.GetAll(c => c.CarId == carId).Count;
+            if (result >= 5)
+            {
+                return new ErrorResult(Messages.CarImageCountOfImagesLimit);
+            }
+            return new SuccessResult();
+
+        }
+
     }
 }
