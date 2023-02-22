@@ -53,15 +53,15 @@ var car1 = new List<Car>() {
 //    carManager.Add(brand);
 //}
 
-var user1 = new List<User>()
-{
-    new User{UserId=1,FirstName="Tarık",LastName="Bayram",Email="abc@gmail.com",Password="123"},
-    new User{UserId=2,FirstName="Meryem",LastName="Bayram",Email="abc@gmail.com",Password="123"},
-    new User{UserId=3,FirstName="İbrahim",LastName="Bayram",Email="abc@gmail.com",Password="123"},
-    new User{UserId=4,FirstName="Rümeysa",LastName="Bayram",Email="abc@gmail.com",Password="123"},
-    new User{UserId=5,FirstName="İsmail",LastName="Bayram",Email="abc@gmail.com",Password="123"},
+//var user1 = new List<User>()
+//{
+//    new User{UserId=1,FirstName="Tarık",LastName="Bayram",Email="abc@gmail.com",Password="123"},
+//    new User{UserId=2,FirstName="Meryem",LastName="Bayram",Email="abc@gmail.com",Password="123"},
+//    new User{UserId=3,FirstName="İbrahim",LastName="Bayram",Email="abc@gmail.com",Password="123"},
+//    new User{UserId=4,FirstName="Rümeysa",LastName="Bayram",Email="abc@gmail.com",Password="123"},
+//    new User{UserId=5,FirstName="İsmail",LastName="Bayram",Email="abc@gmail.com",Password="123"},
 
-};
+//};
 //foreach (var brand in user1)
 //{
 //    userManager.Add(brand);

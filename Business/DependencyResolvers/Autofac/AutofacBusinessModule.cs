@@ -44,6 +44,7 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<FileHelper>().As<IFileHelper>().SingleInstance();
 
+
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()

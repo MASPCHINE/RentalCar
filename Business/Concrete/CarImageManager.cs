@@ -18,60 +18,62 @@ namespace Business.Concrete
 {
     public class CarImageManager : ICarImageService
     {
-        ICarImageDal _carImage;
+        ICarImageDal _carImageDal;
         IFileHelper _fileHelper;
 
         public CarImageManager(ICarImageDal carImage, IFileHelper fileHelper)
         {
-            _carImage = carImage;
+            _carImageDal = carImage;
             _fileHelper = fileHelper;
         }
 
-        public IResult Add(IFormFile file , CarImage entity)
+        public IResult Add(IFormFile file, CarImage entity)
         {
             IResult result = BusinessRules.Run(CheckCarImagesCount(entity.CarId));
-            if(result !=null)
+            if (result != null)
             {
                 return result;
             }
-            entity.ImagePath = _fileHelper.Upload(file,ImagePath.Root);
+            entity.ImagePath = _fileHelper.Upload(file, ImagePath.Root);
             entity.Date = DateTime.Now;
-            _carImage.Add(entity);
+            _carImageDal.Add(entity);
             return new SuccessResult(Messages.Added);
         }
 
         public IResult Delete(CarImage entity)
         {
             _fileHelper.Delete(ImagePath.Root + entity.ImagePath);
-            _carImage.Delete(entity);
+            _carImageDal.Delete(entity);
             return new SuccessResult(Messages.Deleted);
         }
 
         public IDataResult<List<CarImage>> GetByCarId(int carId)
         {
-            return new SuccessDataResult<List<CarImage>>(_carImage.GetAll(c=>c.CarId==carId),Messages.GetCarImage);
+            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId), Messages.GetCarImage);
         }
+
+       
 
         public IDataResult<List<CarImagesDto>> GetImagesByCarId(int carId)
         {
-            return new SuccessDataResult<List<CarImagesDto>>(_carImage.GetImagesByCarId(carId));
-        }
-      
-        public IDataResult<CarImage> GetById(int id)
-        {
-            return new SuccessDataResult<CarImage>(_carImage.Get(c => c.CarImageId == id), Messages.GetCarImage);
+            return new SuccessDataResult<List<CarImagesDto>>(_carImageDal.GetImagesByCarId(carId));
         }
 
-        public IResult Update(IFormFile file,CarImage entity)
+        public IDataResult<CarImage> GetById(int id)
+        {
+            return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.CarImageId == id), Messages.GetCarImage);
+        }
+
+        public IResult Update(IFormFile file, CarImage entity)
         {
             var filePath = ImagePath.Root + entity.ImagePath;
             entity.ImagePath = _fileHelper.Update(file, filePath, ImagePath.Root);
-            _carImage.Update(entity);
+            _carImageDal.Update(entity);
             return new SuccessResult(Messages.Updated);
         }
         private IResult CheckCarImagesCount(int carId)
         {
-            var result = _carImage.GetAll(c => c.CarId == carId).Count;
+            var result = _carImageDal.GetAll(c => c.CarId == carId).Count;
             if (result >= 5)
             {
                 return new ErrorResult(Messages.CarImageCountOfImagesLimit);
@@ -79,6 +81,5 @@ namespace Business.Concrete
             return new SuccessResult();
 
         }
-
     }
 }
