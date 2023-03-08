@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -40,6 +41,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Deleted);
         }
 
+        [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
             

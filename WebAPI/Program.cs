@@ -3,6 +3,9 @@ using Autofac.Extensions.DependencyInjection;
 using Business.Abstract;
 using Business.Concrete;
 using Business.DependencyResolvers.Autofac;
+using Core.DependencyResolvers;
+using Core.Extensions;
+using Core.Utilities.IoC;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
@@ -27,7 +30,7 @@ builder.Services.AddControllers();
 //    options.AddPolicy("AllowOrigin", builder => builder.WithOrigins("http://localhost:7294"));
 //});
 
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+//builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
@@ -45,6 +48,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
         };
     });
+builder.Services.AddDependecyResolvers(new ICoreModule[]
+{
+    new CoreModule()
+});
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
