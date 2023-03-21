@@ -24,13 +24,8 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddCors();
 
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowOrigin", builder => builder.WithOrigins("http://localhost:7294"));
-//});
-
-//builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
@@ -66,7 +61,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-//app.UseCors(builder=>builder.WithOrigins("http://localhost:7294").AllowAnyHeader());
+
+app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
+
 
 app.UseHttpsRedirection();
 
